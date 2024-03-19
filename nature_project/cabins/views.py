@@ -9,14 +9,17 @@ from django.contrib.auth.decorators import login_required
 def index_customer(request):
     return render(request, 'cabins/index_customer.html')
 
+def index(request):
+    return render(request, 'cabins/index.html')
+
 @login_required
 def cabins(request):
     if request.user.is_superuser or request.user.is_staff:
-        return redirect('index.html')
+        cabins_list = Cabin.objects.all()
+        return render(request, 'cabins/index.html', {'cabins_list': cabins_list})
     else:
         cabins_list = Cabin.objects.all()
         return render(request, 'cabins/index_customer.html', {'cabins': cabins_list}) # Redirigir a una página por defecto
-
 
 def change_status_cabin(request, cabin_id):
     cabin = Cabin.objects.get(pk=cabin_id)

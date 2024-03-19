@@ -11,7 +11,8 @@ def index_customer_s(request):
 @login_required
 def services(request):
     if request.user.is_superuser or request.user.is_staff:
-        return redirect('index.html')
+        services_list = Service.objects.all()
+        return render(request, 'services/index.html', {'services_list': services_list})
     else:
         services_list = Service.objects.all()
         return render(request, 'services/index_customer_s.html', {'services': services_list}) # Redirigir a una página por defecto
