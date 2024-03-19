@@ -7,5 +7,6 @@ urlpatterns = [
     path('create/', views.create_service, name='create_service'),
     path('detail/<int:service_id>/', views.detail_service, name='detail_service'),  
     path('delete/<int:service_id>/', views.delete_service, name='delete_service'),
-    path('edit/<int:service_id>/', views.edit_service, name='edit_service'),   
+    path('edit/<int:service_id>/', views.edit_service, name='edit_service'),  
+    path('index_customer_s/', views.index_customer_s, name='index_customer_s'), 
 ]

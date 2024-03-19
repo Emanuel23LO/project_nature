@@ -3,10 +3,19 @@ from services.models import Service
 from .forms import ServiceForm
 from django.http import JsonResponse
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
-def services(request):  
-    services_list = Service.objects.all()  
-    return render(request, 'services/index.html', {'services_list': services_list})
+def index_customer_s(request):
+    return render(request, 'services/index_customer_s.html')
+
+@login_required
+def services(request):
+    if request.user.is_superuser or request.user.is_staff:
+        return redirect('index.html')
+    else:
+        services_list = Service.objects.all()
+        return render(request, 'services/index_customer_s.html', {'services': services_list}) # Redirigir a una página por defecto
+
 
 def change_status_service(request, service_id):
     service = Service.objects.get(pk=service_id)

@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
@@ -35,7 +36,6 @@
 </head>
 
 <body>
-   
 
 
   <main id="main">
@@ -45,25 +45,22 @@
       <div class="container" data-aos="fade-up">
         
         <ul id="portfolio-flters" class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
-          <li data-filter=".filter-app" style="color: blue; font-size: 18px;">Cabañas</li>
+          <li data-filter=".filter-app" style="color: blue; font-size: 18px;">Servicios</li>
          </ul>
 
         <!-- Contenedor de cabañas -->
         <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
           <!-- Mostrar las cabañas -->
-          {% for cabin in cabins %}
-          <div class="col-lg-4 col-md-6 portfolio-item">
-            <div class="portfolio-img"><img src="{{ cabin.image.url }}" class="img-fluid" alt=""></div>
-            <div class="portfolio-info">
-              <h4>{{ cabin.name }}</h4>
-              <p>{{ cabin.description }}</p>
-              <p>$ {{ cabin.value}}</p>
-              <h4> Capacidad: {{ cabin.capacity }}</h4>
-
-
-            </div>
-          </div>
-          {% endfor %}
+          {% for service in services %}
+           <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+             <div class="portfolio-img"><img src="{{ service.image.url }}" class="img-fluid" alt=""></div>
+             <div class="portfolio-info">
+               <h4>{{ service.name }}</h4>
+               <p>{{ service.description }}</p>
+               <p>$ {{ service.value}}</p>
+             </div>
+           </div>
+           {% endfor %}
         </div>
       </div>
     </section><!-- Fin servicios -->
