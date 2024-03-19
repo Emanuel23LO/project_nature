@@ -49,14 +49,20 @@ def index(request):
     customer = Customer.objects.count()
     count_booking = Booking.objects.filter(status="Reservado").count()
     count_booking2 = Booking.objects.filter(status="En ejecución").count()
+    count_booking3 = Booking.objects.filter(status="Cancelado").count()
+    count_booking4 = Booking.objects.filter(status="Confirmado").count()
+    total_bookings = count_booking + count_booking2 + count_booking3 + count_booking4 
     total_reservas = count_booking + count_booking2
+
     
     return render(request, 'index.html', {
         "count": count,
         "count_booking": count_booking,
         "count_booking2": count_booking2,
         "total_reservas": total_reservas,
-        "customer": customer,'total_pagos': total_pagos['total'],
+        "customer": customer,
+        'total_pagos': total_pagos['total'],
+        "total_bookings": total_bookings,
         'data': json.dumps(data)
     })
 
