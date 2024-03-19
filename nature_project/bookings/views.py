@@ -88,7 +88,7 @@ def create_booking(request):
                 date_start=date_start,
                 date_end=date_end,
                 value=total_value,
-                status='Reservado',
+                status='Confirmado',
                 customer_id=request.POST['customer']
             )
             booking.save()        
