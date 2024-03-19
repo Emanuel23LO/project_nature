@@ -74,9 +74,14 @@ def login(request):
         password = request.POST['password']
 
         authenticated_user = authenticate(username=username, password=password)
-        if authenticated_user is not None:
+        if request.user.is_superuser or request.user.is_staff:
             auth_login(request, authenticated_user)
             return render(request, 'index.html', {'user': authenticated_user})
+        
+        elif authenticated_user is not None:
+            auth_login(request, authenticated_user)
+            return render(request, 'bookings/index.html', {'user': authenticated_user})
+        
         else:
             error = 'Usuario o contraseña incorrectos.'
             return render(request, 'login.html', {'error': error})    
