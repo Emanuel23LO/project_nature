@@ -1,5 +1,4 @@
 django~=4.2
-python
 requests~=2.31
 reportlab
 pillow

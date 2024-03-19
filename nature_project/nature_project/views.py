@@ -133,19 +133,30 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import random
 import string
+from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
 
-def recover_password(request):    
+def recover_password(request):
+    mensaje_enviado = False
+    
     if request.method == 'POST':
         email = request.POST.get('email', '')  # Obtener el email del formulario
         
         # Verificar si el email existe en la base de datos
         if User.objects.filter(email=email).exists():
-            """ Cosultar el usuario por el correo  y cambiar la contraseña encriptada"""
-            recuperar_contraseña(email)
-            return redirect('login')
-        else:
-            messages.error(request, 'Inserte un correo existente.')
-            return render(request, 'recover_password.html')
+            nueva_contraseña = generar_contraseña()  # Generar nueva contraseña
+            enviar_correo(email, nueva_contraseña)  # Enviar la nueva contraseña por correo
+            
+            # Cambiar la contraseña en el usuario correspondiente
+            if cambiar_contraseña_usuario(email, nueva_contraseña):
+                # Actualizar la sesión del usuario si está autenticado
+                if request.user.is_authenticated:
+                    update_session_auth_hash(request, request.user)
+                
+                mensaje_enviado = True  # Marcar como verdadero si el mensaje se envió correctamente
+    
+    if mensaje_enviado:
+        messages.success(request, 'Correo enviado.')
     
     return render(request, 'recover_password.html')
 
