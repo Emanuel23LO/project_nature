@@ -34,16 +34,23 @@
 
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">  
-            {% if request.user.is_staff or request.user.is_superuser %}
+            
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'index' %}">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
                 <img src="{% static 'img_new/logo_glammping.jpg' %}" alt="Icono logo" class="mr-2" style="border-radius: 30%; width: 80%; height: 260% ;">
                 <div class="sidebar-brand-text mx-3 align-items-center text-sm">Glammping Nature Vip</div>
             </a>
-            {% endif %}
+            
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
+            {% if request.user.is_staff or request.user.is_superuser %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'index' %}">
+                    <img src="{% static 'img_new/inf.png' %}" alt="Icono de Clientes" class="mr-2 img-fluid" style="max-width: 22px;">
+                    <span>Panel</span>
+            </a>
+            </li>
+            {% endif %}
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -216,18 +223,14 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <!-- <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a> -->
-                                <!-- <a class="dropdown-item" href="#">
+                                    Perfil
+                                </a>
+                                <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Settings
-                                </a> -->
-                                <!-- <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a> -->
+                                </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -238,7 +241,8 @@
 
                     </ul>
 
-                </nav>
+                </nav> 
+           
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
