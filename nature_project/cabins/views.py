@@ -4,10 +4,23 @@ from .forms import CabinForm
 from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 def cabins(request):    
     cabins_list = Cabin.objects.all()    
     return render(request, 'cabins/index.html', {'cabins_list': cabins_list})
+
+@login_required
+def cabins(request):
+    if request.user.role == 'admin' or request.user.role == 'staff':
+        return redirect('index.html')
+    elif request.user.role == 'cliente':
+        return redirect('index_customer.html')
+    else:
+        # Manejar otros casos según sea necesario
+        return redirect('index.html')  # Redirigir a una página por defecto
+
+    # Código adicional si es necesario
 
 def change_status_cabin(request, cabin_id):
     cabin = Cabin.objects.get(pk=cabin_id)
