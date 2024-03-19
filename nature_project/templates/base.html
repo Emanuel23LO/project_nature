@@ -64,6 +64,13 @@
                         <span>Clientes</span>
                 </a>
                 </li>
+
+                <!-- Nav Item - cabin_types -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cabin_types' %}">
+                        <img src="{% static 'img_new/type_cabin.png' %}" alt="Icono de Tipo cabaña" class="mr-2" style="max-width: 22px;">
+                        <span>Tipo de cabañas </span></a>
+                </li>
             {% endif %}
             <!-- Nav Item - cabins -->
             <li class="nav-item">
@@ -72,12 +79,7 @@
                     <span>Cabaña</span></a>
             </li>
 
-             <!-- Nav Item - cabin_types -->
-             <li class="nav-item">
-                <a class="nav-link" href="{% url 'cabin_types' %}">
-                    <img src="{% static 'img_new/type_cabin.png' %}" alt="Icono de Tipo cabaña" class="mr-2" style="max-width: 22px;">
-                    <span>Tipo de cabañas </span></a>
-            </li>
+             
 
             <!-- Nav Item - services -->
             <li class="nav-item">

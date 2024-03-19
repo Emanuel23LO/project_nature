@@ -23,13 +23,23 @@ import os
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
 from django.utils.dateparse import parse_date
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
+def bookings(request):
+    bookings_list = None
+    
+    # Obtener el correo electrónico del usuario autenticado
+    user_email = request.user.email
+    
+    if request.user.is_staff or request.user.is_superuser:
+        # Si el usuario es staff o superusuario, obtener todas las reservas
+        bookings_list = Booking.objects.all()
+    elif user_email is not None:
+        # Filtrar las reservas por el correo electrónico del usuario
+        bookings_list = Booking.objects.filter(customer__email=user_email)
 
-
-
-def bookings(request):    
-    bookings_list = Booking.objects.all()    
     return render(request, 'bookings/index.html', {'bookings_list': bookings_list})
 
 def create_booking(request):
