@@ -23,6 +23,8 @@ import calendar
 from reportlab.platypus import Table, TableStyle
 import locale
 from reportlab.lib import colors
+from django.contrib.auth.decorators import login_required
+
 
 
 def payment_booking(request, id):
@@ -59,8 +61,20 @@ def payment_booking(request, id):
     return render(request, 'payment.html', {'booking': booking, 'total_payments': total_payments})
 
 
-def payments(request):    
-    payments_list = Payment.objects.all()    
+@login_required
+def payments(request):
+    payments_list = None
+    
+    # Obtener el correo electrónico del usuario autenticado
+    user_email = request.user.email
+    
+    if request.user.is_staff or request.user.is_superuser:
+        # Si el usuario es staff o superusuario, obtener todos los pagos
+        payments_list = Payment.objects.all()
+    elif user_email is not None:
+        # Filtrar los pagos por el correo electrónico del usuario a través de las reservas
+        payments_list = Payment.objects.filter(booking__customer__email=user_email)
+
     return render(request, 'payments/index.html', {'payments_list': payments_list})
 
 def change_status_payment(request, payment_id):

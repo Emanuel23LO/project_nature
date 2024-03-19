@@ -31,13 +31,15 @@
             </div>
         </div>
         <div class="mb-3">
-            <label for="" class="form-label">Cliente</label>
-            <select class="form-control" name="customer" id="">
-                <option value="">Selecciona un cliente</option>
+            <label for="customer" class="form-label">Cliente</label>
+            <div class="form-control" id="customer">
                 {% for customer in customers_list %}
-                <option value="{{customer.id}}">{{customer.full_name}}</option>
+                    {% if customer.email == request.user.email %}
+                        <div>{{ customer.full_name }}</div>
+                        <input type="hidden" name="customer" value="{{ customer.id }}">
+                    {% endif %}
                 {% endfor %}
-            </select>
+            </div>
         </div>
         <div class="mb-3">
             <label for="" class="form-label">cabaña</label>
