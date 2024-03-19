@@ -7,7 +7,6 @@ from cabins.models import Cabin
 from services.models import Service
 from bookings.models import Booking
 from booking_cabins.models import Booking_cabin
-from datetime import datetime
 from booking_services.models import Booking_service
 from payments.models import Payment
 from django.db import IntegrityError
@@ -24,7 +23,9 @@ import os
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
 from django.utils.dateparse import parse_date
-from django.http import JsonResponse
+
+
+
 
 
 def bookings(request):    
@@ -186,11 +187,6 @@ def detail_booking(request, booking_id):
     payments = Payment.objects.filter(booking=booking)
     return render(request, 'bookings/detail.html', {'booking': booking, 'booking_cabins': booking_cabins, 'booking_services': booking_services, 'payments': payments})
 
-
-from datetime import datetime
-from django.shortcuts import get_object_or_404
-from django.shortcuts import render
-from django.utils.dateparse import parse_date
 
 def edit_booking(request, booking_id):
     booking = get_object_or_404(Booking, pk=booking_id)

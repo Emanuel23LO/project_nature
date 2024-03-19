@@ -37,7 +37,6 @@
                         <td>{{ booking.value }}</td>
                         <td>{{ booking.status }}</td>
                         <td>      
-                            {% if request.user.is_staff or request.user.is_superuser %}
                             {% if booking.status != 'Cancelado' %}                      
                             <a href="{% url 'detail_booking' booking.id %}" class="btn btn-info btn-circle btn-sm">                    
                                 <i class="fas fa-info-circle"></i>
@@ -54,7 +53,7 @@
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger btn-circle btn-sm"> PDF </button>
                             </form>
-                            {% endif %}
+                          
                             {% endif %}
                         </td>
                     </tr>

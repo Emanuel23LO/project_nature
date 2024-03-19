@@ -1,11 +1,8 @@
 import json
 from pyexpat.errors import messages
-from django.conf import settings
 from django.contrib.auth.models import User
 from .forms import RegisterForm
-from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
-import requests
 from cabins.models import Cabin
 from bookings.models import Booking
 from services.models import Service
@@ -16,6 +13,16 @@ import calendar
 from django.db.models.functions import ExtractMonth
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import random
+import string
+from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
+
+
+
 
 
 def index(request):
@@ -54,13 +61,6 @@ def index(request):
     })
 
 
-
-from django.shortcuts import redirect, render
-from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
-from django.contrib.auth.models import User
-
-
-    
 def login(request):
     error = None
     if request.method == 'POST':
@@ -127,14 +127,6 @@ def register(request):
                     return redirect('login')               
             return redirect('login')    
     return render(request, 'register.html', {'form': form})
-
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-import random
-import string
-from django.contrib.auth import update_session_auth_hash
-from django.contrib import messages
 
 def recover_password(request):
     mensaje_enviado = False
