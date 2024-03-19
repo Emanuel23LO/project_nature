@@ -33,12 +33,21 @@
         <div class="mb-3">
             <label for="customer" class="form-label">Cliente</label>
             <div class="form-control" id="customer">
-                {% for customer in customers_list %}
-                    {% if customer.email == request.user.email %}
-                        <div>{{ customer.full_name }}</div>
-                        <input type="hidden" name="customer" value="{{ customer.id }}">
-                    {% endif %}
-                {% endfor %}
+                {% if request.user.is_staff or request.user.is_superuser %}
+                    <select class="form-select" name="customer" id="customer">
+                        <option value="">Selecciona un cliente</option>
+                        {% for customer in customers_list %}
+                            <option value="{{ customer.id }}">{{ customer.full_name }}</option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    {% for customer in customers_list %}
+                        {% if customer.email == request.user.email %}
+                            <div>{{ customer.full_name }}</div>
+                            <input type="hidden" name="customer" value="{{ customer.id }}">
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
         <div class="mb-3">
