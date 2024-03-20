@@ -22,7 +22,8 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 
 
-
+def bienvenido(request):
+    return render(request, 'bienvenido.html')
 
 
 def index(request):
@@ -81,12 +82,12 @@ def login(request):
         authenticated_user = authenticate(username=username, password=password)
         if request.user.is_superuser or request.user.is_staff:
             auth_login(request, authenticated_user)
-            return render(request, 'bookings/index.html', {'user': authenticated_user})
+            return render(request, 'bienvenido.html', {'user': authenticated_user})
         
         else: 
             if authenticated_user is not None:
                 auth_login(request, authenticated_user)
-                return render(request, 'cabins/index_customer.html', {'user': authenticated_user})
+                return render(request, 'bienvenido.html', {'user': authenticated_user})
         
         
     return render(request, 'login.html')
