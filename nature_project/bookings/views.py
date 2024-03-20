@@ -209,7 +209,9 @@ def edit_booking(request, booking_id):
         date_end = datetime.strptime(new_date_end, '%Y-%m-%d')
         
         # Actualizar las fechas de inicio y fin de la reserva
-        
+        booking.date_start = date_start
+        booking.date_end = date_end
+        booking.save()
 
         # Eliminar cabañas seleccionadas
         cabins_to_delete = request.POST.getlist('cabinToDelete[]')

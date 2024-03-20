@@ -68,12 +68,8 @@
 
         <div class="mb-3">
             <label for="customer" class="form-label">Cliente</label>
-            <select class="form-control" name="customer" id="customer">
-                <option value="">Selecciona un cliente</option>
-                {% for customer in customers_list %}
-                <option value="{{ customer.id }}" {% if customer.id == booking.customer.id %} selected {% endif %}>{{ customer.full_name }}</option>
-                {% endfor %}
-            </select>
+            <input type="text" class="form-control" name="customer" id="customer" value="{{ booking.customer.full_name }}" readonly>
+
         </div>
         <div class="mb-3">
             <label for="cabin" class="form-label">Cabañas</label>
