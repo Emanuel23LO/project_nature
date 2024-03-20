@@ -39,15 +39,7 @@
                         <td>{{ payment.date}}</td>
                         <td>{{ payment.value}}</td>  
                         <td>{{ payment.booking.id}}</td>    
-                    <td>
-                        <form action="{% url 'payment_status' payment.id %}" method="POST">
-                            {% csrf_token %}                            
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="customSwitch{{ forloop.counter }}" {% if payment.status %} checked {% endif %} onchange="this.form.submit()">
-                                <label class="custom-control-label" for="customSwitch{{ forloop.counter }}"></label>
-                            </div>                     
-                        </form>
-                    </td>
+                        <td>{{payment.booking.status}}</td>
                     <td>
                         <a href="" class="btn btn-info btn-circle btn-sm" data-bs-toggle="modal" data-bs-target="#modalId" data-payment-id="{{ payment.id }}">
                             <i class="fas fa-info-circle"></i>

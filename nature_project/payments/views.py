@@ -54,10 +54,11 @@ def payment_booking(request, id):
             elif int(total_p['total']) >= booking.value:
                 booking.status = 'En ejecución'        
             booking.save()
+            messages.success(request, 'Pago creado con éxito.')
             return redirect('bookings') 
         
-        except Exception as e:
-            messages.success(request, 'Pago creado con éxito.')
+        except Exception:
+            messages.success(request, 'Pago rechazado con éxito.')
             return redirect('bookings')         
     return render(request, 'payment.html', {'booking': booking, 'total_payments': total_payments})
 
