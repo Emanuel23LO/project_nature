@@ -259,6 +259,10 @@ def edit_booking(request, booking_id):
         total -= service.value
 
     # Actualizar el campo de total en la reserva con el nuevo valor calculado
+    booking = get_object_or_404(Booking, pk=booking_id)
+    cabins = Cabin.objects.filter(booking_cabin__booking=booking)
+    services = Service.objects.filter(booking_service__booking=booking)
+
     booking.value = int(total)
     
     booking.save()
