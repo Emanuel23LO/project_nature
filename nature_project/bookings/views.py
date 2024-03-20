@@ -209,74 +209,7 @@ def edit_booking(request, booking_id):
         date_end = datetime.strptime(new_date_end, '%Y-%m-%d')
         
         # Actualizar las fechas de inicio y fin de la reserva
-<<<<<<< HEAD
-        booking.date_start = new_date_start
-        booking.date_end = new_date_end
-        booking.save()
-
-        # Eliminar cabañas seleccionadas
-        cabins_to_delete = request.POST.getlist('cabinToDelete[]')
-        for cabin_id in cabins_to_delete:
-            Booking_cabin.objects.filter(booking=booking, cabin_id=cabin_id).delete()
-
-        # Eliminar servicios seleccionados
-        services_to_delete = request.POST.getlist('serviceToDelete[]')
-        for service_id in services_to_delete:
-            Booking_service.objects.filter(booking=booking, service_id=service_id).delete()
-
-        # Luego, iterar sobre los nuevos valores de cabañas y crear nuevas entradas si es necesario
-        for cabin_id in request.POST.getlist('cabinId[]'):
-            if not Booking_cabin.objects.filter(booking=booking, cabin_id=cabin_id).exists():
-                cabin = get_object_or_404(Cabin, pk=cabin_id)
-                cabin_value = request.POST.get(f'cabinValue[{cabin_id}]', '')
-                try:
-                    cabin_value = float(cabin_value)
-                except ValueError:
-                    cabin_value = 0
-
-                Booking_cabin.objects.create(
-                    booking=booking,
-                    cabin=cabin,
-                    value=cabin_value
-                )
-
-        # Finalmente, iterar sobre los nuevos valores de servicios y crear nuevas entradas si es necesario
-        for service_id in request.POST.getlist('serviceId[]'):
-            if not Booking_service.objects.filter(booking=booking, service_id=service_id).exists():
-                service = get_object_or_404(Service, pk=service_id)
-                service_value = request.POST.get(f'serviceValue[{service_id}]', '')
-                try:
-                    service_value = float(service_value)
-                except ValueError:
-                    service_value = 0
-
-                Booking_service.objects.create(
-                    booking=booking,
-                    service=service,
-                    value=service_value
-                )
-
-        # Luego de eliminar y agregar cabañas y servicios, recalcular el total
-        cabins = Cabin.objects.filter(booking_cabin__booking=booking)
-        services = Service.objects.filter(booking_service__booking=booking)
-        total = sum(cabin.value for cabin in cabins) + sum(service.value for service in services)
-        booking.value = int(total)
-        booking.save()
-
-        messages.success(request, 'Reserva editada con éxito.')
-        return redirect('bookings')
-
-    else:  # Si no es una solicitud POST, renderizar el formulario de edición
-        cabins = Cabin.objects.filter(booking_cabin__booking=booking)
-        services = Service.objects.filter(booking_service__booking=booking)
-        customers_list = Customer.objects.all()
-        cabins_list = Cabin.objects.all()
-        services_list = Service.objects.all()
-        total = sum(cabin.value for cabin in cabins) + sum(service.value for service in services)
-        return render(request, 'bookings/edit.html', {'booking': booking, 'customers_list': customers_list, 'cabins_list': cabins_list, 'services_list': services_list, 'cabins': cabins, 'services': services, 'total': total})
-=======
-        
-
+    
         # Eliminar cabañas seleccionadas
         cabins_to_delete = request.POST.getlist('cabinToDelete[]')
         for cabin_id in cabins_to_delete:
@@ -336,7 +269,6 @@ def edit_booking(request, booking_id):
 
         messages.success(request, 'Reserva editada con éxito.')
         return redirect('bookings')
->>>>>>> 4ecc676b6a76bc01fea3f0fd99bda63d84b645f2
 
     else:  # Si no es una solicitud POST, renderizar el formulario de edición
         cabins = Cabin.objects.filter(booking_cabin__booking=booking)
