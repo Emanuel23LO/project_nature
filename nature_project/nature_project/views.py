@@ -26,6 +26,8 @@ from django.contrib import messages
 
 
 def index(request):
+    customer_name = request.user.get_username() 
+
     ingresos_por_mes = Payment.objects.filter(status=True).annotate(
     mes=ExtractMonth('date')
     ).values('mes').annotate(total_ingresos=Sum('value'))
@@ -65,7 +67,8 @@ def index(request):
         "customer": customer,
         'total_pagos': total_pagos['total'],
         "total_bookings": total_bookings,
-        'data': json.dumps(data)
+        'data': json.dumps(data),
+        'customer_name': customer_name,
     })
 
 
@@ -78,15 +81,13 @@ def login(request):
         authenticated_user = authenticate(username=username, password=password)
         if request.user.is_superuser or request.user.is_staff:
             auth_login(request, authenticated_user)
-            return render(request, 'index.html', {'user': authenticated_user})
-        
-        elif authenticated_user is not None:
-            auth_login(request, authenticated_user)
             return render(request, 'bookings/index.html', {'user': authenticated_user})
         
-        else:
-            error = 'Usuario o contraseña incorrectos.'
-            return render(request, 'login.html', {'error': error})    
+        else: 
+            if authenticated_user is not None:
+                auth_login(request, authenticated_user)
+                return render(request, 'cabins/index_customer.html', {'user': authenticated_user})
+        
         
     return render(request, 'login.html')
 

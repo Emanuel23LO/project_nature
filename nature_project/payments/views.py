@@ -24,6 +24,8 @@ from reportlab.platypus import Table, TableStyle
 import locale
 from reportlab.lib import colors
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
+import os
 
 
 
@@ -116,6 +118,13 @@ def generate_payment_pdf(request, payment_id):
     title_style = ParagraphStyle(name='Title', fontSize=24, textColor='grey', alignment=1)
     
     content = []
+
+    logo_path = os.path.join(settings.STATICFILES_DIRS[0], 'img_new', 'logo_glammping.jpg')  # Utiliza el primer directorio de archivos estáticos
+    logo = Image(logo_path)
+    logo.drawWidth = 1.5 * inch  # Ajusta el ancho de la imagen según sea necesario
+    logo.drawHeight = 1.5 * inch  # Ajusta el alto de la imagen según sea necesario
+    content.append(Spacer(1, 24))  # Espacio entre el texto y la imagen
+    content.append(logo)
     
     content.append(Spacer(1, 24))
 
