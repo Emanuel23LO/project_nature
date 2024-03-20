@@ -221,13 +221,6 @@ def edit_booking(request, booking_id):
 
     total = sum(cabin.value for cabin in cabins) + sum(service.value for service in services)
 
-    for cabin in cabins:
-        total += cabin.value * (booking.date_end - booking.date_start).days
-
-    for service in services:
-        total += service.value * (booking.date_end - booking.date_start).days
-    
-        
 
     # Sumar los valores de las nuevas cabañas seleccionadas
     for cabin_id in request.POST.getlist('cabinId[]'):
@@ -264,7 +257,6 @@ def edit_booking(request, booking_id):
         total -= service.value
 
     # Actualizar el campo de total en la reserva con el nuevo valor calculado
-    booking = get_object_or_404(Booking, pk=booking_id)
     cabins = Cabin.objects.filter(booking_cabin__booking=booking)
     services = Service.objects.filter(booking_service__booking=booking)
     booking.value = int(total)
