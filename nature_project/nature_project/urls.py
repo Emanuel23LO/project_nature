@@ -29,8 +29,14 @@ urlpatterns = [
     path('cabins/', include('cabins.urls')),
     # path('booking_services/', include('booking_services.urls')),
     # path('booking_cabins/', include('booking_cabins.urls')),
+<<<<<<< HEAD
     path('login/', views.login, name='login'),    
     #path('login/', views.login, name='login'),
+=======
+    path('login/', views.login, name='login'),
+    path('bienvenido/', views.bienvenido, name='bienvenido'),     
+    path('login/', views.login, name='login'),
+>>>>>>> ca1f4879f7b29381dbbe1a8fec8abbfdca00542b
     path('', views.landing, name='landing'),
     path("logout", views.logout, name="logout"),
     path("recover_password", views.recover_password, name="recover_password"),
