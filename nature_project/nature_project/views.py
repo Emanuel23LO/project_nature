@@ -78,13 +78,11 @@ def login(request):
             auth_login(request, authenticated_user)
             return render(request, 'index.html', {'user': authenticated_user})
         
-        elif authenticated_user is not None:
-            auth_login(request, authenticated_user)
-            return render(request, 'bookings/index.html', {'user': authenticated_user})
+        else: 
+            if authenticated_user is not None:
+                auth_login(request, authenticated_user)
+                return render(request, 'bookings/index.html', {'user': authenticated_user})
         
-        else:
-            error = 'Usuario o contraseña incorrectos.'
-            return render(request, 'login.html', {'error': error})    
         
     return render(request, 'login.html')
 
