@@ -113,7 +113,7 @@ def login(request):
         authenticated_user = authenticate(username=username, password=password)
         if request.user.is_superuser or request.user.is_staff:
             auth_login(request, authenticated_user)
-            return render(request, 'index.html', {'user': authenticated_user, "count": count,
+            return render(request, 'bienvenido.html', {'user': authenticated_user, "count": count,
         "count_booking": count_booking,
         "count_booking2": count_booking2,
         "count_booking3": count_booking3,
@@ -125,9 +125,10 @@ def login(request):
         'data': json.dumps(data),})
         
         else: 
-            if authenticated_user is not None:
-                auth_login(request, authenticated_user)
-                return render(request, 'bienvenido.html', {'user': authenticated_user})
+            auth_login(request, authenticated_user)
+            return render(request, 'bienvenido.html', {'user': authenticated_user})
+        
+     
         
         
     return render(request, 'login.html')
