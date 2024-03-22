@@ -26,6 +26,9 @@ def bienvenido(request):
     return render(request, 'bienvenido.html')
 
 
+def manual_usuario(request):
+    return render(request, 'manual_usuario.html')
+
 def index(request):
     customer_name = request.user.get_username() 
 
